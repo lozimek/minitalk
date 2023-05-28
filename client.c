@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luozimek <luozimek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luka <luka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 05:13:17 by luozimek          #+#    #+#             */
-/*   Updated: 2023/05/23 06:23:15 by luozimek         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:02:59 by luka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	transmit_letter(int pid, char letter)
 int	main(int ac, char **av)
 {
 	int		pid;
-	int		i;
 	char	*message_ptr;
 
-	i = 0;
-	if (ac == 3)
+	if (ac != 3)
+		error(1);
+	else
 	{
 		message_ptr = &av[2][0];
 		check_end_pid(&av[1][0]);
@@ -49,5 +49,4 @@ int	main(int ac, char **av)
 		}
 		transmit_letter(pid, '\n');
 	}
-	error(1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_func.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luozimek <luozimek@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luka <luka@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 05:47:28 by luozimek          #+#    #+#             */
-/*   Updated: 2023/05/23 06:18:02 by luozimek         ###   ########.fr       */
+/*   Updated: 2023/05/28 16:20:49 by luka             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	error(int x)
 		print_error(ERR_PIDPOS);
 	else if (x == 4)
 		print_error(ERR_PIDPROSS);
+	else if (x == 5)
+		print_error(ERR_MOREARG);
 }
 
 void	check_end_pid(char *str)

@@ -3,65 +3,84 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: luozimek <luozimek@student.42.fr>          +#+  +:+       +#+         #
+#    By: luka <luka@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/23 05:07:29 by luozimek          #+#    #+#              #
-#    Updated: 2023/05/23 05:53:04 by luozimek         ###   ########.fr        #
+#    Updated: 2023/05/28 17:48:54 by luka             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#################### COLORS ####################
-DEF = \033[0m
-UP = \033[A
-RETURN = \033[K
-PURPLE = \033[38;5;225m
-YELLOW = \033[38;5;226m
-BLUE = \033[38;5;117m
+	# Library Name #
+NAME	=
+CLIENT	=	client
+SERVER	=	server
+	# libft Variables #
+LIBFT		=	./libft/libft.a
+LIBFT_DIR	=	./libft
 
-NAME = minitalk
-SRCS = server.c client.c extra_func.c
-OBJS = $(SRCS:.c=.o)
-LIBFT_DIR = ./Libft/
-LIBFT = $(LIBFT_DIR)/libft.a
 
-#################### COMPILER ####################
+	# Mandatory Variables #
+SRC_C	=	client.c extra_func.c
+SRC_S	=	server.c extra_func.c
+INC		=	-I. -I$(LIBFT_DIR) -I$(LIBFT_DIR)/stack \
+			-I$(LIBFT_DIR)/get_next_line
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+	# Compiling Variables #
+CC			=	gcc
+CFLAG		=	-Wall -Wextra -Werror
+RM			=	rm -f
 
-ifndef DEBUG
-	CFLAGS += -fsanitize=address -g
+	# Colors #
+GREEN		=	\e[38;5;118m
+YELLOW		=	\e[38;5;226m
+RESET		=	\e[0m
+_SUCCESS	=	[$(GREEN)SUCCESS$(RESET)]
+_INFO		=	[$(YELLOW)INFO$(RESET)]
+
+	# Debugger #
+ifeq ($(DEBUG), 1)
+	D_FLAG	=	-g
 endif
 
-LIBS = $(LIBFT)
+	# Fsanitize #
+ifeq ($(SANITIZE), 1)
+	D_FLAG	=	-fsanitize=leak -g
+endif
 
-%.o:%.c
-	@$(CC) $(CFLAGS) -c $< -o $@
-	@printf "${PURPLE}Compiling $<${RETURN}\n${DEF}"
-	@printf "${UP}"
 
-#################### RULES ####################
-all: $(NAME)
+all: $(SERVER) $(CLIENT)
 
-$(NAME): $(OBJS)
-	@${MAKE} -C $(LIBFT_DIR)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
-	@printf "\n${YELLOW}All files compiled successfully\n${DEF}"
-	@printf "${BLUE}${NAME} COMPILED ! ✨\n\n${DEF}"
-	@echo "---------------------------------------------"
+$(NAME): all
 
+$(SERVER): $(LIBFT)
+	@ $(CC) $(D_FLAG) $(CFLAG) $(SRC_S) $(LIBFT) $(INC) -o $(SERVER)
+	@printf "$(_SUCCESS) server ready.\n"
+
+$(CLIENT): $(LIBFT)
+	@ $(CC) $(D_FLAG) $(CFLAG) $(SRC_C) $(LIBFT) $(INC) -o $(CLIENT)
+	@printf "$(_SUCCESS) client ready.\n"
+
+
+$(LIBFT):
+	@ $(MAKE) DEBUG=$(DEBUG) -C ./libft
 
 clean:
-	@make -C $(LIBFT_DIR) clean
-	@rm -rf $(OBJS)
+	@ $(RM) $(CLIENT) $(SERVER)
+	@printf "$(_INFO) client removed.\n"
+	@printf "$(_INFO) server removed.\n"
 
-fclean: clean
-	@make -C $(LIBFT_DIR) fclean
-	@rm -rf $(NAME)
-
-debug:
-	@${MAKE} DEBUG=1
+fclean:
+	@ $(MAKE) fclean -C $(LIBFT_DIR)
+	@ $(RM) $(CLIENT) $(SERVER)
+	@printf "$(_INFO) client removed.\n"
+	@printf "$(_INFO) server removed.\n"
 
 re: fclean all
 
-.PHONY: all clean fclean re debug
+mandatory:	$(CLIENT) $(SERVER)
+bonus:		mandatory
+
+m : mandatory
+b : bonus
+
+.PHONY: all clean fclean re mandatory m bonus b
