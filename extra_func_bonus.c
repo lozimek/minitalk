@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extra_func.c                                       :+:      :+:    :+:   */
+/*   extra_func_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luozimek <luozimek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 05:47:28 by luozimek          #+#    #+#             */
-/*   Updated: 2023/06/08 14:42:24 by luozimek         ###   ########.fr       */
+/*   Created: 2023/06/12 12:05:16 by luozimek          #+#    #+#             */
+/*   Updated: 2023/06/12 13:08:14 by luozimek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static void	print_error(char *message)
 {

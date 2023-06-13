@@ -3,84 +3,90 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: luka <luka@student.42.fr>                  +#+  +:+       +#+         #
+#    By: luozimek <luozimek@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/23 05:07:29 by luozimek          #+#    #+#              #
-#    Updated: 2023/05/28 17:48:54 by luka             ###   ########.fr        #
+#    Created: 2023/06/13 10:26:26 by luozimek          #+#    #+#              #
+#    Updated: 2023/06/13 14:16:23 by luozimek         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-	# Library Name #
-NAME	=
-CLIENT	=	client
-SERVER	=	server
-	# libft Variables #
-LIBFT		=	./libft/libft.a
-LIBFT_DIR	=	./libft
+#################### COLORS ####################
+DEF = \033[0m
+UP = \033[A
+RETURN = \033[K
+PURPLE = \033[38;5;225m
+GREEN  = \033[38;5;118m
+YELLOW = \033[38;5;226m
+BLUE = \033[38;5;117m
+_SUCCESS    =   [$(GREEN)SUCCESS$(DEF)]
+_INFO       =   [$(YELLOW)INFO$(DEF)]
 
+NAME_C = client
+NAME_S = server
+NAME_Cbonus = client_bonus
+NAME_Sbonus = server_bonus
 
-	# Mandatory Variables #
-SRC_C	=	client.c extra_func.c
-SRC_S	=	server.c extra_func.c
-INC		=	-I. -I$(LIBFT_DIR) -I$(LIBFT_DIR)/stack \
-			-I$(LIBFT_DIR)/get_next_line
+SRC_C = client.c extra_func.c
+SRC_S = server.c extra_func.c
+SRC_Cbonus = client_bonus.c extra_func_bonus.c
+SRC_Sbonus = server_bonus.c extra_func_bonus.c
 
-	# Compiling Variables #
-CC			=	gcc
-CFLAG		=	-Wall -Wextra -Werror
-RM			=	rm -f
+LIBFT_DIR = ./Libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-	# Colors #
-GREEN		=	\e[38;5;118m
-YELLOW		=	\e[38;5;226m
-RESET		=	\e[0m
-_SUCCESS	=	[$(GREEN)SUCCESS$(RESET)]
-_INFO		=	[$(YELLOW)INFO$(RESET)]
+#################### COMPILER ####################
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+RM = rm -rf
 
-	# Debugger #
+################## DEBUGGER ######################
 ifeq ($(DEBUG), 1)
-	D_FLAG	=	-g
+    D_FLAG  =   -g
 endif
 
-	# Fsanitize #
 ifeq ($(SANITIZE), 1)
-	D_FLAG	=	-fsanitize=leak -g
+    D_FLAG  =   -fsanitize=leak -g
 endif
 
-
-all: $(SERVER) $(CLIENT)
+#################### RULES ####################
+all: $(NAME_C) $(NAME_S)
 
 $(NAME): all
 
-$(SERVER): $(LIBFT)
-	@ $(CC) $(D_FLAG) $(CFLAG) $(SRC_S) $(LIBFT) $(INC) -o $(SERVER)
-	@printf "$(_SUCCESS) server ready.\n"
+$(NAME_S): $(LIBFT)
+	@ $(CC) $(D_FLAG) $(CFLAGS) $(SRC_S) $(LIBFT) -o $(NAME_S)
+	@ printf "$(_SUCCESS) server ready.\n"
 
-$(CLIENT): $(LIBFT)
-	@ $(CC) $(D_FLAG) $(CFLAG) $(SRC_C) $(LIBFT) $(INC) -o $(CLIENT)
-	@printf "$(_SUCCESS) client ready.\n"
+$(NAME_C): $(LIBFT)
+	@ $(CC) $(D_FLAG) $(CFLAGS) $(SRC_C) $(LIBFT) -o $(NAME_C)
+	@ printf "$(_SUCCESS) client ready.\n"
 
+bonus: $(NAME_Cbonus) $(NAME_Sbonus)
 
+$(NAME_Sbonus): $(LIBFT)
+	@ $(CC) $(D_FLAG) $(CFLAGS) $(SRC_Sbonus) $(LIBFT) -o $(NAME_Sbonus)
+	@ printf "$(_SUCCESS) server bonus ready.\n"
+
+$(NAME_Cbonus): $(LIBFT)
+	@ $(CC) $(D_FLAG) $(CFLAGS) $(SRC_Cbonus) $(LIBFT) -o $(NAME_Cbonus)
+	@ printf "$(_SUCCESS) client bonus ready.\n"
+	
 $(LIBFT):
-	@ $(MAKE) DEBUG=$(DEBUG) -C ./libft
+	@ $(MAKE) -C $(LIBFT_DIR)
 
 clean:
-	@ $(RM) $(CLIENT) $(SERVER)
-	@printf "$(_INFO) client removed.\n"
-	@printf "$(_INFO) server removed.\n"
+	@ $(MAKE) -C $(LIBFT_DIR) clean
+	@ $(RM) $(NAME_C) $(NAME_S)
+	@ printf "$(_INFO) client removed.\n"
+	@ printf "$(_INFO) server removed.\n"
 
 fclean:
-	@ $(MAKE) fclean -C $(LIBFT_DIR)
-	@ $(RM) $(CLIENT) $(SERVER)
-	@printf "$(_INFO) client removed.\n"
-	@printf "$(_INFO) server removed.\n"
+	@ $(MAKE) -C $(LIBFT_DIR) fclean
+	@ $(RM) $(NAME_C) $(NAME_Cbonus) $(NAME_S) $(NAME_Sbonus)
+	@ printf "$(_INFO) all client removed.\n"
+	@ printf "$(_INFO) all server removed.\n"
 
 re: fclean all
 
-mandatory:	$(CLIENT) $(SERVER)
-bonus:		mandatory
+.PHONY: all clean fclean re
 
-m : mandatory
-b : bonus
-
-.PHONY: all clean fclean re mandatory m bonus b

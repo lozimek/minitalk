@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Minitalk.h                                         :+:      :+:    :+:   */
+/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luozimek <luozimek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 05:10:37 by luozimek          #+#    #+#             */
-/*   Updated: 2023/06/12 10:01:38 by luozimek         ###   ########.fr       */
+/*   Created: 2023/06/12 12:03:36 by luozimek          #+#    #+#             */
+/*   Updated: 2023/06/12 12:04:09 by luozimek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#ifndef MINITALK_BONUS_H
 
 # include <unistd.h>
 # include <signal.h>

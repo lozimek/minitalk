@@ -6,7 +6,7 @@
 #    By: luozimek <luozimek@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/22 18:03:08 by luozimek          #+#    #+#              #
-#    Updated: 2023/05/23 04:56:34 by luozimek         ###   ########.fr        #
+#    Updated: 2023/06/13 11:38:18 by luozimek         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ SRCS_FT_PRINTF = $(addprefix $(FT_PRINTF_PATH), ft_parscheck.c \
 												ft_my_fonctions.c \
 												ft_printf.c)
 
-OBJS = ${SRCS_LIBFT:.c=.o} ${SRCS_FT_PRINTF:.c=.o} ${SRCS_GNL:.c=.o} 
+OBJS = ${SRCS_LIBFT:.c=.o} ${SRCS_FT_PRINTF:.c=.o}
 
 NAME = libft.a
 all: ${NAME}

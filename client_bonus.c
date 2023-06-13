@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luozimek <luozimek@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 05:13:17 by luozimek          #+#    #+#             */
-/*   Updated: 2023/06/12 13:07:57 by luozimek         ###   ########.fr       */
+/*   Created: 2023/06/12 12:01:54 by luozimek          #+#    #+#             */
+/*   Updated: 2023/06/12 13:07:44 by luozimek         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 void	transmit_letter(int pid, char letter)
 {
@@ -50,5 +50,9 @@ int	main(int ac, char **av)
 			usleep(25);
 		}
 		transmit_letter(pid, '\n');
+		if (pid == -1)
+			ft_printf(RED"Message not received"DEF);
+		else
+			ft_printf(GREEN"Message received"DEF);
 	}
 }
